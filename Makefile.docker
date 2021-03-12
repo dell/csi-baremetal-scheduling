@@ -1,0 +1,51 @@
+include variables.mk
+
+####################
+### Build images ###
+####################
+images: image-extender \
+image-extender-patcher \
+image-scheduler
+
+image-extender:
+	cp ./pkg/${SCHEDULER}/${EXTENDER}/Dockerfile ./build/${SCHEDULING_PKG}/${EXTENDER}/
+	docker build --network host --force-rm --tag ${REGISTRY}/${PROJECT}-${SCHEDULER}-${EXTENDER}:${TAG} ./build/${SCHEDULING_PKG}/${EXTENDER}
+
+image-extender-patcher:
+	docker build --network host --force-rm --tag ${REGISTRY}/${PROJECT}-${EXTENDER_PATCHER}:${TAG} ./pkg/${SCHEDULER_EXTENDER_PATCHER_PKG}
+
+image-scheduler:
+	cp ./pkg/${SCHEDULER}/${PLUGIN}/Dockerfile ./build/${SCHEDULING_PKG}/${SCHEDULER}/
+	docker build --network host --force-rm --tag ${REGISTRY}/${PROJECT}-${SCHEDULER}:${TAG} ./build/${SCHEDULING_PKG}/${SCHEDULER}
+
+###################
+### Push images ###
+###################
+push: push-extender \
+push-extender-patcher \
+push-scheduler
+
+push-extender:
+	docker push ${REGISTRY}/${PROJECT}-${SCHEDULER}-${EXTENDER}:${TAG}
+
+push-extender-patcher:
+	docker push ${REGISTRY}/${PROJECT}-${EXTENDER_PATCHER}:${TAG}
+
+push-scheduler:
+	docker push ${REGISTRY}/${PROJECT}-${SCHEDULER}:${TAG}
+
+####################
+### Clean images ###
+####################
+clean-images: clean-image-extender \
+clean-image-extender-patcher \
+clean-image-scheduler
+
+clean-image-extender:
+	docker rmi ${REGISTRY}/${PROJECT}-${SCHEDULER}-${EXTENDER}:${TAG}
+
+clean-image-extender-patcher:
+	docker rmi ${REGISTRY}/${PROJECT}-${EXTENDER_PATCHER}:${TAG}
+
+clean-image-scheduler:
+	docker rmi ${REGISTRY}/${PROJECT}-${SCHEDULER}:${TAG}

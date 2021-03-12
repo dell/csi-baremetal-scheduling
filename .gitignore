@@ -1,0 +1,16 @@
+# git diff files
+*.diff
+# idea files
+.idea
+*.iml
+# libries and build artifacts
+*_output
+vendor
+build/
+# tests results
+coverage.out
+coverage.html
+# vscode
+.vscode
+# python 
+__pycache__
