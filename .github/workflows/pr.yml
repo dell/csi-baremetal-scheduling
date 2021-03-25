@@ -40,7 +40,7 @@ jobs:
           go-build-${{ env.go_version }}-
         
     - name: Get dependencies
-      run:  go mod download
+      run:  make dependency
       
     - name: Install golangci-lint
       run: |
@@ -48,9 +48,9 @@ jobs:
         sudo dpkg -i golangci-lint.deb
         
     - name: Lint code
-      run: GOGC=300 golangci-lint -v run ./...
+      run: GOGC=300 golangci-lint --timeout=5m -v run ./...
   
       
     - name: Build binaries
       run: |
-        go build .
+        make build
