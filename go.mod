@@ -6,7 +6,7 @@ require (
 	github.com/antonfisher/nested-logrus-formatter v1.0.3
 	github.com/container-storage-interface/spec v1.2.0
 	github.com/coreos/rkt v1.30.0
-	github.com/dell/csi-baremetal v0.0.0-20210311090459-86858e76ce95 // indirect
+	github.com/dell/csi-baremetal v0.0.0-20210323080755-2f74fd299e93 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/golang/protobuf v1.3.5
 	github.com/google/go-cmp v0.4.0 // indirect
